@@ -30,6 +30,10 @@ button:hover {
     background-color: #45a049;
 }
 
+#containerBusca {
+    display: none;
+}
+
 #result {
     margin-top: 20px;
     white-space: pre-wrap;
