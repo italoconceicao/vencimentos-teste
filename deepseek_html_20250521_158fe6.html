@@ -4,26 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vencimentos (Deep Seek)</title>
+    <title>Vencimentos</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Conversor XLSX para JSON</h1>
-    <p>Faça upload de um arquivo Excel (.xlsx) para converter para JSON</p>
+    <main>
+        <section id="secaoBusca">
+            <h1></h1>
+            <p>Faça upload de um arquivo Excel (.xlsx) para converter para JSON</p>
 
-    <div class="container">
-        <input type="file" id="fileInput" accept=".xlsx, .xls" />
-        <button onclick="document.getElementById('fileInput').click()">Selecionar Arquivo</button>
-        <p id="fileName">Nenhum arquivo selecionado</p>
-    </div>
+            <div class="container">
+                <input type="file" id="fileInput" accept=".xlsx, .xls" />
+                <button onclick="document.getElementById('fileInput').click()">Selecionar Arquivo</button>
+                <p id="fileName">Nenhum arquivo selecionado</p>
+            </div>
+        </section>
+        <section>
+            <div>
+                <div class="container" id="containerBusca">
+                    <p>Etiqueta</p>
+                    <input type="text" name="buscaEtiqueta" id="buscaEtiqueta"
+                        placeholder="Digite o número da etiqueta">
+                    <button id="btnBusca">Verifcar</button>
+                </div>
+            </div>
 
-    <div id="result">
-        <h3>Resultado em JSON:</h3>
-        <pre id="jsonOutput"></pre>
-    </div>
 
+            <div id="result">
+                <h3>Vencimentos Encontrados:</h3>
+                <pre id="jsonOutput"></pre>
+            </div>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 
