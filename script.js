@@ -23,9 +23,14 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
         const resultado = []
         const remessasEncontradas = []
 
-        // console.log(remessasEncontradas)
+        document.getElementById('buscaEtiqueta').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                pesquisa();
+            }
+        })
+        document.getElementById('btnBusca').addEventListener('click', pesquisa)
 
-        document.getElementById('btnBusca').addEventListener('click', function (e) {
+        function pesquisa() {
             etiquetaBipada = document.getElementById('buscaEtiqueta').value;
 
 
@@ -44,25 +49,24 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
                     resultado.push(`✅ ${remessa["Rota"]} - ${remessa["Nome Pessoa Visita"]} -  ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]}`)
                 }
 
+                const resultDiv = document.getElementById('result');
+                const jsonOutput = document.getElementById('jsonOutput');
+
+                // jsonOutput.textContent = JSON.stringify(resultado, null, 2);
+
+                if (resultado.length > 0) {
+                    jsonOutput.textContent = resultado.join('\n');
+                } else {
+                    alert('Nenhum vencimento encontrado para esta etiqueta.');
+                }
+                resultDiv.style.display = 'block';
+
             }
 
-            const resultDiv = document.getElementById('result');
-            const jsonOutput = document.getElementById('jsonOutput');
 
-            // jsonOutput.textContent = JSON.stringify(resultado, null, 2);
-
-            if (resultado.length > 0) {
-                jsonOutput.textContent = resultado.join('\n');
-            } else {
-                alert('Nenhum vencimento encontrado para esta etiqueta.');
-            }
-            resultDiv.style.display = 'block';
-
-
-            // Opcional: fazer download do JSON
-            // createDownloadLink(jsonData, file.name);
-        });
-
+        };
+        // Opcional: fazer download do JSON
+        // createDownloadLink(jsonData, file.name);
 
 
 
