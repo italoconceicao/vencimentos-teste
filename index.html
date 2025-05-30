@@ -10,34 +10,49 @@
 </head>
 
 <body>
-    <main>
-        <section id="secaoBusca">
-            <h1></h1>
-            <p>Faça upload de um arquivo Excel (.xlsx) para converter para JSON</p>
+    <header>
+    </header>
+    <main id="tela">
+        <article>
+            <section id="secaoBusca">
+                <h1></h1>
+                <p>Faça upload de um arquivo Excel (.xlsx)</p><br>
 
-            <div class="container">
-                <input type="file" id="fileInput" accept=".xlsx, .xls" />
-                <button onclick="document.getElementById('fileInput').click()">Selecionar Arquivo</button>
-                <p id="fileName">Nenhum arquivo selecionado</p>
-            </div>
-        </section>
-        <section>
-            <div>
-                <div class="container" id="containerBusca">
-                    <p>Etiqueta</p>
-                    <input type="text" name="buscaEtiqueta" id="buscaEtiqueta"
-                        placeholder="Digite o número da etiqueta">
-                    <button id="btnBusca">Verifcar</button>
+                <div class="container">
+                    <input type="file" id="fileInput" accept=".xlsx, .xls" />
+                    <button onclick="document.getElementById('fileInput').click()">Selecionar Arquivo</button>
+                    <p id="fileName">Nenhum arquivo selecionado</p>
                 </div>
-            </div>
+            </section>
+            <section>
+                <div>
+                    <div class="container" id="containerBusca">
+                        <p>Etiqueta</p>
+                        <input type="text" name="buscaEtiqueta" id="buscaEtiqueta"
+                            placeholder="Digite o número da etiqueta">
+                        <button id="btnBusca">Verifcar</button>
+                    </div>
+                    <div id="botoesVencimentos">
+                        <div class="vencimentos" id="encontrados">
+                            <p>Encontrados</p>
+                        </div>
+                        <div class="vencimentos" id="naoEncontrados">Não Encontrados</div>
+                    </div>
+                    <div id="displayVencimentos"></div>
+                </div>
 
 
-            <div id="result">
-                <h3>Vencimentos Encontrados:</h3>
-                <pre id="jsonOutput"></pre>
-            </div>
-        </section>
+                <div id="result">
+                    <h3 id="vencimentosh3">0 encontrados:</h3>
+                    <pre id="outputVencimentos"></pre>
+                </div>
+            </section>
+        </article>
     </main>
+
+    <footer>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 
