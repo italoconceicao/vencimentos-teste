@@ -1,4 +1,8 @@
 let etiquetaBipada
+const vencimentosEncontrados = []
+const vencimentosNaoEncontrados = []
+const remessasEncontradas = []
+let jsonLength = 0
 
 document.getElementById('fileInput').addEventListener('change', function (e) {
 
@@ -30,12 +34,7 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
         const worksheet = workbook.Sheets[firstSheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        const vencimentosEncontrados = []
-        const vencimentosNaoEncontrados = []
-        const remessasEncontradas = []
-        const jsonRemessasNaoEncontradas = []
         const h3 = document.getElementById('vencimentosh3')
-
 
 
         document.getElementById('buscaEtiqueta').addEventListener('keypress', function (e) {
@@ -45,48 +44,35 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
         })
         document.getElementById('btnBusca').addEventListener('click', pesquisa);
 
+        jsonLength = jsonData.length;
+
         function pesquisa() {
             etiquetaBipada = document.getElementById('buscaEtiqueta').value;
 
             const filtroEtiquetaBipada = jsonData.filter((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
-            const filtroRemessasEncontradas = remessasEncontradas.filter((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
+
+            if (filtroEtiquetaBipada.length < 1) {
+                window.alert("Esta remessa não é um vencimento!");
+            }
 
             for (remessa of filtroEtiquetaBipada) {
 
-                const arrayParaFiltroRemessas = filtroRemessasEncontradas.filter((remessa) => remessa["Nro. Etiqueta"] == etiquetaBipada)
+                const filtroRemessasEncontradas = remessasEncontradas.filter((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
 
+                if (remessasEncontradas.includes(remessa)) {
+                    window.alert("Esta remessa já foi adicionada!");
 
-                jsonRemessasNaoEncontradas.filter((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
-
-
-
-                //CHECAR
-                // POR QUE
-                // ALERT
-                // PAROU
-                // DE
-                // FUNCIONAR
-
-
-
-
-
-
-
-                if (arrayParaFiltroRemessas.length > 0) {
-                    alert("Remessa já adicionada.")
                 } else {
                     remessasEncontradas.push(remessa);
+                    jsonLength = --jsonData.length;
 
-                    vencimentosEncontrados.push(`✅ ${remessa["Rota"]} - ${remessa["Nome Pessoa Visita"]} -  ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]}`)
 
-                    const indiceRemessa = jsonData.findIndex((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
+                    vencimentosEncontrados.push(`✅ ${remessa["Rota"]} - ${remessa["Nome Pessoa Visita"]} -  ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]} [${remessa["Nome Cliente"]}]`)
 
-                    const removerIndiceEncontrado = jsonData.splice(indiceRemessa, 1);
-                    console.log(removerIndiceEncontrado)
+                    // const indiceRemessa = jsonData.findIndex((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
+                    // const removerIndiceEncontrado = jsonData.splice(indiceRemessa, 1);
 
                     h3.textContent = `${remessasEncontradas.length} vencimentos encontrado(s)`;
-
 
                 }
 
@@ -105,18 +91,15 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
         // Opcional: fazer download do JSON
         // createDownloadLink(jsonData, file.name);      <====     [CORRIGIR]
 
-
         document.getElementById('naoEncontrados').addEventListener('click', function (e) {
             document.getElementById('encontrados').style.border = "outset";
             document.getElementById('naoEncontrados').style.border = "inset";
 
             for (remessa of jsonData) {
-                vencimentosNaoEncontrados.push(`❌ ${remessa["Rota"]} - ${remessa["Nome Pessoa Visita"]} -  ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]}`)
-
-                // jsonRemessasNaoEncontradas.push(remessa);
+                vencimentosNaoEncontrados.push(`❌ ${remessa["Rota"]} - ${remessa["Nome Pessoa Visita"]} -  ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]} [${remessa["Nome Cliente"]}]`)
             }
 
-            h3.textContent = `${jsonData.length} vencimento(s) não encontrado(s)`;
+            h3.textContent = `${jsonLength} vencimento(s) não encontrado(s)`;
 
             outputVencimentos.textContent = vencimentosNaoEncontrados.join('\n');
 
@@ -138,6 +121,19 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
     reader.readAsArrayBuffer(file);
 });
 
+// FAZER:
+// - mensagem de vencimento encontrado
+// - opções de sort
+
+//CORRIGIR:
+// - botões não mudam ao encontrar vencimento
+
+
+
+
+
+
+
 
 
 
@@ -149,7 +145,7 @@ function createDownloadLink(data, originalFilename) {
 
     const a = document.createElement('a');
     a.href = url;
-    // a.download = originalFilename.replace('.xlsx', '.json');
+    a.download = originalFilename.replace('.xlsx', '.json');
     a.textContent = 'Baixar lista';
     a.style.display = 'block';
     a.style.marginTop = '10px';
