@@ -78,10 +78,12 @@ button:hover {
 
 #encontrados {
     border: inset;
+    cursor: pointer;
 }
 
 #naoEncontrados {
     border: outset;
+    cursor: pointer;
 }
 
 #result {
