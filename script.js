@@ -48,6 +48,7 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 
         function pesquisa() {
             etiquetaBipada = document.getElementById('buscaEtiqueta').value;
+            mensagemVencimentoEncontrado = document.getElementById('mensagemVencimentoEncontrado');
 
             const filtroEtiquetaBipada = jsonData.filter((produto) => produto["Nro. Etiqueta"] == etiquetaBipada);
 
@@ -73,6 +74,26 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
                     // const removerIndiceEncontrado = jsonData.splice(indiceRemessa, 1);
 
                     h3.textContent = `${remessasEncontradas.length} vencimentos encontrado(s)`;
+                    const outputEncontrado = document.getElementById('outputEncontrado');
+                    const outputEncontrado2 = document.getElementById('outputEncontrado2');
+
+                    outputEncontrado.textContent = `${remessa["Rota"]}`
+                    outputEncontrado2.textContent = `${remessa["Nome Pessoa Visita"]} | ${remessa["Logradouro Pessoa Visita"]}, ${remessa["Numero Endereço Pessoa Visita"]} | ${remessa["Nome Cliente"]}`
+
+                    setTimeout(() => {
+                        mensagemVencimentoEncontrado.style.display = "flex";
+                        setTimeout(() => {
+                            mensagemVencimentoEncontrado.style.opacity = "1";
+                            mensagemVencimentoEncontrado.style.transform = "translateY(0)";
+                        }, 10);
+                    }, 1000);
+                    setTimeout(() => {
+                        mensagemVencimentoEncontrado.style.opacity = "0";
+                        mensagemVencimentoEncontrado.style.transform = "translateY(-20px)";
+                        setTimeout(() => {
+                            mensagemVencimentoEncontrado.style.display = "none";
+                        }, 500);
+                    }, 4000);
 
                 }
 
@@ -122,7 +143,7 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 });
 
 // FAZER:
-// - mensagem de vencimento encontrado
+// 
 // - opções de sort
 
 //CORRIGIR:
