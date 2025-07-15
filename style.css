@@ -27,6 +27,11 @@ section {
     padding: 20px;
 }
 
+#secaoBusca {
+    position: relative;
+}
+
+
 .container {
     border: 2px dashed #ccc;
     padding: 20px;
@@ -100,6 +105,32 @@ button:hover {
 
 h3 {
     text-align: center;
+}
+
+#mensagemVencimentoEncontrado {
+    width: 40vw;
+    height: 25vh;
+    background-color: #4ee656;
+    color: #FFF;
+    text-shadow: 3px 0px 2px black;
+    display: none;
+
+    transition: opacity 0.7s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateY(-20px);
+
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    position: absolute;
+    top: 10%;
+    left: 30%;
+}
+
+#outputEncontrado {
+    font-size: 220%;
+    font-weight: 700;
 }
 
 footer {
