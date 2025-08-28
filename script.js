@@ -99,10 +99,17 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 
                 const outputVencimentos = document.getElementById('outputVencimentos');
 
-                // outputVencimentos.textContent = JSON.stringify(vencimentosEncontrados, null, 2);
-
                 if (vencimentosEncontrados.length > 0) {
+
+                    vencimentosEncontrados.sort((a, b) => {
+                        const rotaA = a.split(' - ')[0];
+                        const rotaB = b.split(' - ')[0];
+
+                        return rotaA.localeCompare(rotaB);
+                    });
+
                     outputVencimentos.textContent = vencimentosEncontrados.join('\n');
+
                 } else {
                     alert('Nenhum vencimento encontrado para esta etiqueta.');
                 }
@@ -121,6 +128,13 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
             }
 
             h3.textContent = `${jsonLength} vencimento(s) não encontrado(s)`;
+
+            vencimentosNaoEncontrados.sort((a, b) => {
+                const rotaA = a.split(' - ')[0];
+                const rotaB = b.split(' - ')[0];
+
+                return rotaA.localeCompare(rotaB);
+            });
 
             outputVencimentos.textContent = vencimentosNaoEncontrados.join('\n');
 
@@ -143,12 +157,11 @@ document.getElementById('fileInput').addEventListener('change', function (e) {
 });
 
 // FAZER:
-// 
-// - opções de sort
 
 //CORRIGIR:
 // - botões não mudam ao encontrar vencimento
-
+// - cores de mensagem de vencimento encontrado
+// - download da lista
 
 
 
